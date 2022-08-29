@@ -1,11 +1,7 @@
 
-int showmenuItems(String items[], int highlight = -1) {
+int showmenuItems(String items[], bool forcereset = false) {
   r.loop();
-
-  // for (int i = 0; i < 5; i++) 
-  //   Serial.print(items[i]);
-  // Serial.println();
-
+  
   static int select = 0;
   static int lastposencoder = 0;
   static String lastItem;
@@ -20,7 +16,7 @@ int showmenuItems(String items[], int highlight = -1) {
     u8x8.clearDisplay();
   }
   
-  if (encoderdiff != 0 || reset) {
+  if (encoderdiff != 0 || reset || forcereset) {
     select -= encoderdiff; // Swap move direction cause it bugs the shit out of me
     
     int arrayLeng = 0;
@@ -64,8 +60,6 @@ int showmenuItems(String items[], int highlight = -1) {
       for (int i = 0; i < 3; i++) {
         u8x8.setCursor(2,curLine);
         u8x8.print(items[curIndex]);
-        if (curIndex == highlight)
-          u8x8.drawString(13,curLine,"<");
         curIndex++;
         curLine += 2;
       }

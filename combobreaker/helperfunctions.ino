@@ -39,6 +39,7 @@ double returnStallNum(int speed, int ms_threshold) { // Runs the motor at certai
   static long peakAngle = 0;
   long curMultiTurn;
 
+  digitalWrite(enablePin, LOW);
   stepper.setSpeed(speed);
   stepper.runSpeed();
 
@@ -67,7 +68,6 @@ double returnStallNum(int speed, int ms_threshold) { // Runs the motor at certai
     return readLockNum(peakAngle % 4096);
   }
 
-
   return -1;
 }
 
@@ -76,6 +76,7 @@ void dial(float num, DIR _dir = CLOSE, int extraRot = 0) { // Inputs number into
   float deltanum;
   float CCdelta;
   float CWdelta;
+  digitalWrite(enablePin, LOW);
 
   extraRot = abs(extraRot);
 

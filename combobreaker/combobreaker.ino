@@ -13,13 +13,13 @@
 
 #define CLICKS_PER_STEP   4  
 
-String mainMenu[] = {"Cracklock", "Auto Dialer", "Reset Motors", "Settings", "end", "Main Menu"};
-String autodial[] = {"Back", "Dial", "Dial Combo", "Dial & Test","end", "Auto Dialer"};
-String settings[] = {"Back", "Set Zero Pos", "Lock","end", "Settings"};
-String craklokset[] = {"Back", "Auto", "Man 1st Num", "Man 3rd Num", "Manual", "end", "l0kcrakSet"};
+String mainMenu[] = {"Cracklock", "Auto Dialer", "Reset Motors", "Disable Step", "end", "Main Menu"};
+String AutoDial[] = {"Back", "end", "Auto Dialer"};
 int page = 0;
+int selection = -1;
 int curLockSett = 1;
 int positionencoder;
+int lastenc;
 
 ESPRotary r = ESPRotary(ROTARY_PIN1, ROTARY_PIN2, CLICKS_PER_STEP);
 
@@ -60,7 +60,7 @@ void dial(float num, DIR _dir = CLOSE, int extraRot = 0);
 float readLockNum(int num = -1);
 void crackLock();
 
-int showmenuItems(String items[], int highlight = -1);
+int showmenuItems(String items[], bool forcereset = false);
 
 void setup()
 {  
@@ -96,46 +96,59 @@ void setup()
 
 void loop()
 {  
-  int selection;
-  Serial.println(page);
-
+  
+  
   switch (page) {
     case 0:
-      selection = showmenuItems(settings);
-      if (selection == 0)
+      
+      selection = showmenuItems(mainMenu);
+
+      switch (selection) {
+      case 0:
+        u8x8.clear();
+        u8x8.drawString(0,0, "Lock Cracker");
         crackLock();
-      else if (selection == 3)
+        delay(8000);
+        showmenuItems(mainMenu, true);
+        break;
+      case 1:
+        u8x8.clear();
+        u8x8.drawString(0,0, "Auto Dialer");
+        u8x8.drawString(3,4, "Current");
+        u8x8.drawString(0,2, "<");
+        u8x8.drawString(2,2, "Back");
         page = 1;
-      else if (selection == 1)
-        page = 3;
-      else if (selection == 2) {
+        break;
+      case 2:
         dial(0);
         servo.writeMicroseconds(servoNeutral);
+        break;
+      case 3:
+        digitalWrite(enablePin, HIGH);
       }
-      selection = -1;
       break;
 
-    case 1: 
-      // selection = showmenuItems(settings);
-      if (selection == 0)
-        page = 0; 
-      else if (selection == 2)
-        page = 2;
+    case 1:
+      r.loop();
+      u8x8.setCursor(3, 6);
+      u8x8.print(readLockNum());
+
+
+      // u8x8.drawString(7,4, "Target");
+      // u8x8.setCursor(7, 6);
+      // u8x8.print(positionencoder%40);
+      if (lastenc != positionencoder)
+        dial(positionencoder%40);
+      lastenc = positionencoder;
+      if (detectPress()) {
+        showmenuItems(mainMenu, true);
+        page = 0;
+      }
       break;
 
-    case 2:
-      // selection = showmenuItems(craklokset, curLockSett);
-      if (selection == 0)
-        page = 1; 
-      if (selection > 0)
-        curLockSett = selection;
-      break;
-
-    case 3:
-      // selection = showmenuItems(autodial);
-      if (selection == 0)
-        page = 0; 
   }
+  
+  
 }
 
 

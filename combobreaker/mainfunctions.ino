@@ -310,9 +310,10 @@ void crackLock() {
       testAllCombos(3);
   
   double elapsedTime = (double)(millis() - lockTime)/ 1000;
-  u8x8.drawString(0,0, "Done in ");
-  u8x8.setCursor(8,0);
+  u8x8.drawString(0,2, "Done in ");
+  u8x8.setCursor(8,2);
   u8x8.print(elapsedTime);
+  u8x8.drawString(14,2, "s");
   Serial.println(" ----- Done in " + String(elapsedTime) + " seconds -----");
 }
 
