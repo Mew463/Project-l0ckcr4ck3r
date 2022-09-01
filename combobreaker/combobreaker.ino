@@ -34,7 +34,7 @@ U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(U8X8_PIN_NONE);
 
 bool checkTwice = false;
 bool cracked = false;
-
+bool estop = false;
 enum DIR{CC, CW, CLOSE};
 
 AccelStepper stepper(1,3,4); // STEP, DIR 
@@ -125,6 +125,7 @@ void loop()
         break;
       case 3:
         digitalWrite(enablePin, HIGH);
+        break;
       }
       break;
 
@@ -132,11 +133,6 @@ void loop()
       r.loop();
       u8x8.setCursor(3, 6);
       u8x8.print(readLockNum());
-
-
-      // u8x8.drawString(7,4, "Target");
-      // u8x8.setCursor(7, 6);
-      // u8x8.print(positionencoder%40);
       if (lastenc != positionencoder)
         dial(positionencoder%40);
       lastenc = positionencoder;
