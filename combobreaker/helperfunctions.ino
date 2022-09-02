@@ -34,7 +34,6 @@ long multiTurnAngle() { // Multiturn angle
 }
 
 double returnStallNum(int speed, int ms_threshold) { // Runs the motor at certain speed and returns the lock number it stopped at
-  static bool firstRun = false;
   static unsigned long lastTime;
   static long peakAngle = 0;
   long curMultiTurn;
@@ -45,8 +44,13 @@ double returnStallNum(int speed, int ms_threshold) { // Runs the motor at certai
 
   curMultiTurn = multiTurnAngle();
 
-  if (!firstRun) {
-    firstRun = true;
+  if (!digitalRead(BUTTON_PIN) || estop) {
+    estop = 1;
+    return;
+  }
+
+  if (!firstCheckStall) {
+    firstCheckStall = true;
     peakAngle = curMultiTurn;
     lastTime = millis();
   }
@@ -64,7 +68,7 @@ double returnStallNum(int speed, int ms_threshold) { // Runs the motor at certai
     }
 
   if (millis() - lastTime > ms_threshold) {
-    firstRun = false;
+    firstCheckStall = false;
     return readLockNum(peakAngle % 4096);
   }
 
@@ -116,7 +120,8 @@ void dialcombo(int num1, int num2, int num3) { // Inputs 3 number combination, w
   static int lastnum3 = -1; 
   int CCdelta;
 
-  if (lastnum1 == num1 && lastnum3 == num3) { 
+  if ((lastnum1 == num1 && lastnum3 == num3) && !firstComboCheck) { 
+    firstComboCheck = false;
     if (lastnum2 > num2)
       CCdelta = 40 + num2 - lastnum2;
     else

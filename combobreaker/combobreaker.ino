@@ -35,6 +35,9 @@ U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(U8X8_PIN_NONE);
 bool checkTwice = false;
 bool cracked = false;
 bool estop = false;
+bool firstCheckStall = false;
+bool firstComboCheck = true;
+bool mtrsReset = true;
 enum DIR{CC, CW, CLOSE};
 
 AccelStepper stepper(1,3,4); // STEP, DIR 
@@ -108,7 +111,7 @@ void loop()
         u8x8.clear();
         u8x8.drawString(0,0, "Lock Cracker");
         crackLock();
-        delay(8000);
+        while (!digitalRead(BUTTON_PIN));
         showmenuItems(mainMenu, true);
         break;
       case 1:
@@ -122,6 +125,7 @@ void loop()
       case 2:
         dial(0);
         servo.writeMicroseconds(servoNeutral);
+        mtrsReset = true;
         break;
       case 3:
         digitalWrite(enablePin, HIGH);

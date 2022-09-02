@@ -1,7 +1,7 @@
 void findFirstNum() { // Spins the dial while slowly pulling up on the shackle, when the motor stalls add ~14 to the current number
   printLine("Finding", 2);
   printLine("First Num", 3);
-  int curServoCom = servoNeutral - 60; // Start probing a little higher than Neutral to save time
+  int curServoCom = servoNeutral - 40; // Start probing a little higher than Neutral to save time
   dial(0, CC, 2); // Clear lock and ensure all the dials are being spun
 
   servo.writeMicroseconds(curServoCom);
@@ -46,6 +46,10 @@ void findThirdNum() {
   firstNumRem = firstNum % 4;
 
   for (int i = 0; i < 3; i++) { // Never need to check more than the first 3 gates of the lock
+      if (!digitalRead(BUTTON_PIN) || estop) {
+        estop = 1;
+        return;
+      }
       findBounds();
 
       if (gateBounds[0] > 20 && gateBounds[1] > 20) { // Did not cross over past 0 which can't be a number of interest
@@ -124,6 +128,11 @@ void findThirdNum() {
   printLine("Testing", 2);
   printLine("Gate Size : ", 3);
 
+  if (!digitalRead(BUTTON_PIN) || estop) {
+    estop = 1;
+    return;
+  }
+
   for (int a = 0; a < 2; a++) {
     x = 0;
 
@@ -143,6 +152,11 @@ void findThirdNum() {
       u8x8.drawString(12, 3,"  ");
       u8x8.setCursor(12, 3);
       u8x8.print(posThirdNums[i]);
+      if (posThirdNums[i] > 40) {
+        showError("Third Num", "Out of Bounds");
+        estop = 1;
+        return;
+      }
       dial(posThirdNums[i], CC); 
       findBounds();
 
@@ -224,10 +238,15 @@ bool testAllCombos(int ind = 0) {
     Serial.println("trying " + String(firstNum) + "," + String(secondNums[ind][curIndex]) + "," + String(thirdNum[ind]));
     printCombo(firstNum, secondNums[ind][curIndex], thirdNum[ind]);
 
+    if (!digitalRead(BUTTON_PIN) || estop) {
+      estop = 1;
+      return;
+    }
     dialcombo(firstNum, secondNums[ind][curIndex], thirdNum[ind]);
     if (testOpen()) {
       Serial.println("success!!!");
       cracked = true;
+      mtrsReset = false;
       return true;
     }
   }
@@ -272,7 +291,7 @@ void findBounds() { // Activate servo and find the right and left bounds of a ga
   int speed = 200;
   int threshold = 100;
 
-  servo.writeMicroseconds(gateHeight-30);
+  servo.writeMicroseconds(gateHeight-20);
 
   delay(150);
 
@@ -300,18 +319,32 @@ void findBounds() { // Activate servo and find the right and left bounds of a ga
 }
 
 void crackLock() {
+  if (!mtrsReset) {
+    showError("Please Reset", "Motors");
+    return;
+  }
+
+  estop = false;
   cracked = false;
+  firstCheckStall = false;
+  firstComboCheck = true;
   Serial.println(" ----- Start -----");
   printCombo(-1, -1, -1,1);
   lockTime = millis();
   findFirstNum();
+  if (estop)
+    return;
   printCombo(firstNum, -1, -1, 3);
 
   dial(39, CC); // Make sure all the disc packs dont interfere with finding the third num
   dial(0,CW); // Reset lock to 0 to prep for probing
   findThirdNum();
+  if (estop)
+    return;
   calcSecondNums();
   testAllCombos(0);
+  if (estop)
+    return;
   if (!cracked)
     testAllCombos(2);
 
@@ -326,6 +359,7 @@ void crackLock() {
   u8x8.print(elapsedTime);
   u8x8.drawString(14,2, "s");
   Serial.println(" ----- Done in " + String(elapsedTime) + " seconds -----");
+  delay(8000);
 }
 
 
