@@ -72,24 +72,10 @@ int showmenuItems(String items[], bool forcereset = false) {
   lastItem = curItem;
   if (detectPress()) {
     reset = true;
-    Serial.println("Pressed!!");
     return select;
   }
   else
     return -1;
-}
-
-void showError(String message, String message2) {
-  u8x8.clear();
-  u8x8.drawString(0,0, "Error");
-  u8x8.drawString(0,7, "> Continue");
-  u8x8.setCursor(0,3);
-  u8x8.print(message);
-  u8x8.setCursor(0,4);
-  u8x8.print(message2);
-  while (!detectPress()) ;
-  u8x8.clear();
-  return;
 }
 
 void printLine(String message, int line) {

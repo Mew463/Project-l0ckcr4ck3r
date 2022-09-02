@@ -153,7 +153,6 @@ void findThirdNum() {
       u8x8.setCursor(12, 3);
       u8x8.print(posThirdNums[i]);
       if (posThirdNums[i] > 40) {
-        showError("Third Num", "Out of Bounds");
         estop = 1;
         return;
       }
@@ -319,11 +318,6 @@ void findBounds() { // Activate servo and find the right and left bounds of a ga
 }
 
 void crackLock() {
-  if (!mtrsReset) {
-    showError("Please Reset", "Motors");
-    return;
-  }
-
   estop = false;
   cracked = false;
   firstCheckStall = false;

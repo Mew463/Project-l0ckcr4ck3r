@@ -121,7 +121,6 @@ void dialcombo(int num1, int num2, int num3) { // Inputs 3 number combination, w
   int CCdelta;
 
   if ((lastnum1 == num1 && lastnum3 == num3) && !firstComboCheck) { 
-    firstComboCheck = false;
     if (lastnum2 > num2)
       CCdelta = 40 + num2 - lastnum2;
     else
@@ -138,6 +137,7 @@ void dialcombo(int num1, int num2, int num3) { // Inputs 3 number combination, w
     dial(num1, CW, 2);
     dial(num2, CC, 1);
     dial(num3, CW);
+    firstComboCheck = false;
   }
 
   lastnum1 = num1;
