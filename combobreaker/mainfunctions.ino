@@ -42,7 +42,7 @@ void findThirdNum() {
 
   printLine("Third Num", 3);
 
-  dial(39.5, CLOSE); // Setup lock dial to intiate probing 
+  dial(39.5); // Setup lock dial to intiate probing 
   firstNumRem = firstNum % 4;
 
   for (int i = 0; i < 3; i++) { // Never need to check more than the first 3 gates of the lock
@@ -50,7 +50,13 @@ void findThirdNum() {
         estop = 1;
         return;
       }
-      findBounds();
+      if (i == 0)
+        if (findBounds(1) == 0) {
+          dial(0.5);
+          findBounds();
+        }
+      else
+        findBounds();
 
       if (gateBounds[0] > 20 && gateBounds[1] > 20) { // Did not cross over past 0 which can't be a number of interest
         dial(gateBounds[1] + 2, CLOSE); // Move onto the next gate, which is two numbers from the right edge of the previous gate 
@@ -285,18 +291,30 @@ bool testOpen() {
   return true; // target position hit!!
 }
 
-void findBounds() { // Activate servo and find the right and left bounds of a gate
+bool findBounds(bool checkSkip = 0) { // Activate servo and find the right and left bounds of a gate
   gateBounds[0] = 0; gateBounds[1] = 0;
   int speed = 200;
   int threshold = 100;
+  double initialStart = readLockNum();
+  double distanceMoved;
 
-  servo.writeMicroseconds(gateHeight-20);
+  servo.writeMicroseconds(gateHeight-40);
 
   delay(150);
-
+  
   double RstallNum = -1;
   while (RstallNum == -1) {
     RstallNum = returnStallNum(speed, threshold);
+    distanceMoved = readLockNum() - initialStart;
+    if (checkSkip) {
+      if (distanceMoved < -20)
+        distanceMoved += 40;
+      if (distanceMoved > 5) {
+        servo.writeMicroseconds(servoNeutral);
+        delay(200);
+        return 0;
+      }
+    }
   }
   
   gateBounds[1] = RstallNum;
@@ -315,6 +333,7 @@ void findBounds() { // Activate servo and find the right and left bounds of a ga
   // Serial.println("LBound : " + String(LstallNum) + " RBound : " + String(RstallNum));
   
   delay(200);
+  return 1;
 }
 
 void crackLock() {

@@ -64,6 +64,8 @@ float readLockNum(int num = -1);
 void crackLock();
 
 int showmenuItems(String items[], bool forcereset = false);
+bool findBounds(bool checkSkip = 0);
+
 
 void setup()
 {  
