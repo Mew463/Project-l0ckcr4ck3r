@@ -7,7 +7,7 @@ void crackLock() {
   Serial.println(" ----- Start -----");
   printCombo(-1, -1, -1,1);
   lockTime = millis();
-  // findFirstNum();
+  findFirstNum();
   if (estop)
     return;
   printCombo(firstNum, -1, -1, 3);
@@ -15,18 +15,15 @@ void crackLock() {
   dial(39, CC); // Make sure all the disc packs dont interfere with finding the third num
   dial(0,CW); // Reset lock to 0 to prep for probing
   findThirdNum();
-  Serial.println("im here");
-  
+
   if (estop)
     return;
   calcSecondNums();
+
   testAllCombos(0);
   if (!cracked)
     testAllCombos(2);
 
-  if (checkTwice && !cracked)
-    if (!testAllCombos(1)) // Test separate case if the previous test failed 
-      testAllCombos(3);
   
   double elapsedTime = (double)(millis() - lockTime)/ 1000;
   printLine("",3);

@@ -203,7 +203,7 @@ bool findBounds(bool checkSkip = 0) { // Activate servo and find the right and l
   double initialStart = readLockNum();
   double distanceMoved;
 
-  servo.writeMicroseconds(gateHeight-40);
+  servo.writeMicroseconds(gateHeight-50);
 
   delay(150);
   
@@ -214,7 +214,7 @@ bool findBounds(bool checkSkip = 0) { // Activate servo and find the right and l
     if (checkSkip) {
       if (distanceMoved < -20)
         distanceMoved += 40;
-      if (distanceMoved > 5) {
+      if (distanceMoved > 4) {
         servo.writeMicroseconds(servoNeutral);
         delay(200);
         return 0;

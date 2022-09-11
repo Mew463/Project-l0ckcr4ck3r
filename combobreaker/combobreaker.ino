@@ -53,7 +53,7 @@ unsigned long lockTime;
 
 // Related to each lock!! for testing!!
 int gateHeight = 1798;
-int firstNum = 21;
+int firstNum = 0;
 int firstNumRem;
 int thirdNum[] = {-1, -1, -1, -1}; 
 int secondNums[4][8];

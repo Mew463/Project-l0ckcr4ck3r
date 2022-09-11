@@ -53,7 +53,8 @@ void findThirdNum() {
       if (i == 0) {
         if (findBounds(1) == 0) {
           Serial.println("Skip detected!");
-          dial(0.5);
+          firstCheckStall = false;
+          dial(1.5);
           findBounds();
         }
       } 
@@ -139,54 +140,51 @@ void findThirdNum() {
     return;
   }
 
-  for (int a = 0; a < 2; a++) {
-    x = 0;
 
-    for (int i = 0; i < 4; i++) {  // Check all combinations to see if the modulus matures with the modules of the first Num 
-      if (lockedPos[0] % 4 == firstNumRem)
-        posThirdNums[x++] = lockedPos[0];
-      if (lockedPos[a+1] % 4 == firstNumRem)
-        posThirdNums[x++] = lockedPos[a+1];
-      if (x > 1)
-        break;
+  x = 0;
+  int a = 0;
 
-      lockedPos[0] += 10; lockedPos[a+1] += 10; //increment both numbers by 10 to check all combinations
-
-    }
-
-    for (int i = 0; i < 2; i++) { // Narrow it down from two numbers to one number by choosing the largest gate size
-      u8x8.drawString(12, 3,"  ");
-      u8x8.setCursor(12, 3);
-      u8x8.print(posThirdNums[i]);
-      if (posThirdNums[i] > 40) {
-        estop = 1;
-        return;
-      }
-      dial(posThirdNums[i], CC); 
-      findBounds();
-
-      double diff = gateBounds[1] - gateBounds[0];
-      if (diff < 0) // Handle wrap around
-        diff += 40;
-      gateSize[i] = diff;
-    }
-
-    if (gateSize[0] > gateSize[1]) {
-      thirdNum[a] = posThirdNums[0];
-      thirdNum[a+2] = posThirdNums[1]; // Keep track of the other one as well
-    }
-    else {
-      thirdNum[a] = posThirdNums[1];
-      thirdNum[a+2] = posThirdNums[0]; // Keep track of the other one as well
-    }
-
-    Serial.println("Third number: " + String(thirdNum[a]));  
-
-    if (!checkTwice)
+  for (int i = 0; i < 4; i++) {  // Check all combinations to see if the modulus matures with the modules of the first Num 
+    if (lockedPos[0] % 4 == firstNumRem)
+      posThirdNums[x++] = lockedPos[0];
+    if (lockedPos[a+1] % 4 == firstNumRem)
+      posThirdNums[x++] = lockedPos[a+1];
+    if (x > 1)
       break;
 
-    dial(0, CW);
+    lockedPos[0] += 10; lockedPos[a+1] += 10; //increment both numbers by 10 to check all combinations
+
   }
+
+  for (int i = 0; i < 2; i++) { // Narrow it down from two numbers to one number by choosing the largest gate size
+    u8x8.drawString(12, 3,"  ");
+    u8x8.setCursor(12, 3);
+    u8x8.print(posThirdNums[i]);
+    if (posThirdNums[i] > 40) {
+      estop = 1;
+      return;
+    }
+    dial(posThirdNums[i], CC); 
+    findBounds();
+
+    double diff = gateBounds[1] - gateBounds[0];
+    if (diff < 0) // Handle wrap around
+      diff += 40;
+    gateSize[i] = diff;
+  }
+
+  if (gateSize[0] > gateSize[1]) {
+    thirdNum[a] = posThirdNums[0];
+    thirdNum[a+2] = posThirdNums[1]; // Keep track of the other one as well
+  }
+  else {
+    thirdNum[a] = posThirdNums[1];
+    thirdNum[a+2] = posThirdNums[0]; // Keep track of the other one as well
+  }
+
+  Serial.println("Third number: " + String(thirdNum[a]));  
+
+  dial(0, CW);
 }
 
 void calcSecondNums() { // Calculates the possible second numbers and places them in the array
