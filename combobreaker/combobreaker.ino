@@ -53,7 +53,7 @@ unsigned long lockTime;
 
 // Related to each lock!! for testing!!
 int gateHeight = 1798;
-int firstNum = 0;
+int firstNum = 21;
 int firstNumRem;
 int thirdNum[] = {-1, -1, -1, -1}; 
 int secondNums[4][8];
@@ -65,6 +65,7 @@ void crackLock();
 
 int showmenuItems(String items[], bool forcereset = false);
 bool findBounds(bool checkSkip = 0);
+bool testAllCombos(int ind = 0);
 
 
 void setup()

@@ -50,11 +50,13 @@ void findThirdNum() {
         estop = 1;
         return;
       }
-      if (i == 0)
+      if (i == 0) {
         if (findBounds(1) == 0) {
+          Serial.println("Skip detected!");
           dial(0.5);
           findBounds();
         }
+      } 
       else
         findBounds();
 
@@ -77,7 +79,6 @@ void findThirdNum() {
       double diffr = abs(rcrossover - gateBounds[1]); 
 
       if (lcrossover != rcrossover) {
-        Serial.println("error!! crossovers are not equal");
         if (diffl > diffr)
           NOI[i] = lcrossover;
         else
@@ -92,11 +93,10 @@ void findThirdNum() {
         gateDifferences[i] = diffl;
       else
         gateDifferences[i] = diffr;
+      
       if (i != 2)
-      dial(gateBounds[1] + 2.5, CLOSE); // Move onto the next gate, which is two numbers from the right edge of the previous gate 
+        dial(gateBounds[1] + 2.5, CLOSE); // Move onto the next gate, which is two numbers from the right edge of the previous gate 
     }
-
-    // Serial.println(String(gateDifferences[0]) + " " + String(gateDifferences[1]) + " " + String(gateDifferences[2]));
 
     double greatest = 0;
     int ind;
@@ -260,119 +260,6 @@ bool testAllCombos(int ind = 0) {
   return false;
 }
 
-bool testOpen() {
-  unsigned long curTime = millis();
-  unsigned long lastTime = millis();
 
-  double curPos = ringbufferAvg();
-  double lastPos = curPos;
-  
-  int posThreshold = 25;
-  int timeThreshold = 35;
-  servo.writeMicroseconds(servoOpen);
-
-  int nonfirst = 0;
-
-  while (abs(curPos - servoFeedbackOpen) > posThreshold) { // while target position has not been hit yet
-    curPos = ringbufferAvg();
-    curTime = millis();
-
-    if (abs(curPos - lastPos) > 5) { // Servo is still moving
-      lastPos = curPos;
-      lastTime = curTime;
-      nonfirst++;
-    }
-    if (curTime - lastTime > timeThreshold && nonfirst != 0) { // Stalling!
-      servo.writeMicroseconds(servoNeutral);
-      delay(350);
-      return false;
-    }
-  }
-  return true; // target position hit!!
-}
-
-bool findBounds(bool checkSkip = 0) { // Activate servo and find the right and left bounds of a gate
-  gateBounds[0] = 0; gateBounds[1] = 0;
-  int speed = 200;
-  int threshold = 100;
-  double initialStart = readLockNum();
-  double distanceMoved;
-
-  servo.writeMicroseconds(gateHeight-40);
-
-  delay(150);
-  
-  double RstallNum = -1;
-  while (RstallNum == -1) {
-    RstallNum = returnStallNum(speed, threshold);
-    distanceMoved = readLockNum() - initialStart;
-    if (checkSkip) {
-      if (distanceMoved < -20)
-        distanceMoved += 40;
-      if (distanceMoved > 5) {
-        servo.writeMicroseconds(servoNeutral);
-        delay(200);
-        return 0;
-      }
-    }
-  }
-  
-  gateBounds[1] = RstallNum;
-  
-  delay(50);
-
-  double LstallNum = -1;
-  while (LstallNum == -1) {
-    LstallNum = returnStallNum(-speed, threshold);
-  }
-
-  gateBounds[0] = LstallNum;
-
-  servo.writeMicroseconds(servoNeutral);
-
-  // Serial.println("LBound : " + String(LstallNum) + " RBound : " + String(RstallNum));
-  
-  delay(200);
-  return 1;
-}
-
-void crackLock() {
-  estop = false;
-  cracked = false;
-  firstCheckStall = false;
-  firstComboCheck = true;
-  Serial.println(" ----- Start -----");
-  printCombo(-1, -1, -1,1);
-  lockTime = millis();
-  findFirstNum();
-  if (estop)
-    return;
-  printCombo(firstNum, -1, -1, 3);
-
-  dial(39, CC); // Make sure all the disc packs dont interfere with finding the third num
-  dial(0,CW); // Reset lock to 0 to prep for probing
-  findThirdNum();
-  if (estop)
-    return;
-  calcSecondNums();
-  testAllCombos(0);
-  if (estop)
-    return;
-  if (!cracked)
-    testAllCombos(2);
-
-  if (checkTwice && !cracked)
-    if (!testAllCombos(1)) // Test separate case if the previous test failed 
-      testAllCombos(3);
-  
-  double elapsedTime = (double)(millis() - lockTime)/ 1000;
-  printLine("",3);
-  printLine("Done in ",2);
-  u8x8.setCursor(8,2);
-  u8x8.print(elapsedTime);
-  u8x8.drawString(14,2, "s");
-  Serial.println(" ----- Done in " + String(elapsedTime) + " seconds -----");
-  delay(8000);
-}
 
 

@@ -165,3 +165,79 @@ double ringbufferAvg() {
   return (double)sum/arraysize;
 }
 
+bool testOpen() {
+  unsigned long curTime = millis();
+  unsigned long lastTime = millis();
+
+  double curPos = ringbufferAvg();
+  double lastPos = curPos;
+  
+  int posThreshold = 25;
+  int timeThreshold = 35;
+  servo.writeMicroseconds(servoOpen);
+
+  int nonfirst = 0;
+
+  while (abs(curPos - servoFeedbackOpen) > posThreshold) { // while target position has not been hit yet
+    curPos = ringbufferAvg();
+    curTime = millis();
+
+    if (abs(curPos - lastPos) > 5) { // Servo is still moving
+      lastPos = curPos;
+      lastTime = curTime;
+      nonfirst++;
+    }
+    if (curTime - lastTime > timeThreshold && nonfirst != 0) { // Stalling!
+      servo.writeMicroseconds(servoNeutral);
+      delay(350);
+      return false;
+    }
+  }
+  return true; // target position hit!!
+}
+
+bool findBounds(bool checkSkip = 0) { // Activate servo and find the right and left bounds of a gate
+  gateBounds[0] = 0; gateBounds[1] = 0;
+  int speed = 200;
+  int threshold = 100;
+  double initialStart = readLockNum();
+  double distanceMoved;
+
+  servo.writeMicroseconds(gateHeight-40);
+
+  delay(150);
+  
+  double RstallNum = -1;
+  while (RstallNum == -1) {
+    RstallNum = returnStallNum(speed, threshold);
+    distanceMoved = readLockNum() - initialStart;
+    if (checkSkip) {
+      if (distanceMoved < -20)
+        distanceMoved += 40;
+      if (distanceMoved > 5) {
+        servo.writeMicroseconds(servoNeutral);
+        delay(200);
+        return 0;
+      }
+    }
+  }
+  
+  gateBounds[1] = RstallNum;
+  
+  delay(50);
+
+  double LstallNum = -1;
+  while (LstallNum == -1) {
+    LstallNum = returnStallNum(-speed, threshold);
+  }
+
+  gateBounds[0] = LstallNum;
+
+  servo.writeMicroseconds(servoNeutral);
+
+  // Serial.println("LBound : " + String(LstallNum) + " RBound : " + String(RstallNum));
+  
+  delay(200);
+  return 1;
+}
+
