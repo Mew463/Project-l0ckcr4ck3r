@@ -1,8 +1,11 @@
 # Project-l0ckcr4ck3r
-A fully Autonomous Lock Cracking Robot which uses Samy Kamkar's algorithm to crack locks in ~40 seconds
+This robot is a true creation of the idea many years ago brought on by Samy Kamkar's robot that "utilized" his algorithm for cracking these combination locks. The entire process works on the majority of locks that don't have much resistance on the dial and usually takes ~40 seconds.
+![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
+
 
 ![MVIMG_20220913_114445](https://user-images.githubusercontent.com/72902803/189985666-f4c0db4e-e7cb-4d15-8908-caf322dbd3b7.jpg)
-[Video](https://cad.onshape.com/documents/2b977856993104d0f24f1470/w/e2828f2601c6a316a05788e0/e/a76e54aa91df89bb32ae0012)
+
+[**Full Video**](https://cad.onshape.com/documents/2b977856993104d0f24f1470/w/e2828f2601c6a316a05788e0/e/a76e54aa91df89bb32ae0012)
 
 # how it works. 
 ## Cracking a lock 
@@ -10,18 +13,21 @@ First number: Turn dial Counter Clockwise while incrementally adding more and mo
 
 Third number: Find the gates between numbers 0 - 10 digits. Perform some math for the gates that correspond to a whole number. Do some more math and math and then check the two numbers that will be spit out. The number with the biggest gate is the third number.
 
-Second number: Guess and check till the lock opens, though it follows a pattern of being a constant + a multiple of 4.
+Second number: Guess and check till the lock opens, though it follows a pattern of being (FirstNum modulo 4) + a multiple of 4.
 
-I found that this [video](https://www.youtube.com/watch?v=27rE5ZvWLU0&ab_channel=HelpfulLockPicker) really helped me when trying to program to algorithm.
+I found that this [video](https://www.youtube.com/watch?v=27rE5ZvWLU0&ab_channel=HelpfulLockPicker) really helped me when trying to program the algorithm.
 
 ## This robot 
-A stepper motor / Encoder drives the dial and can regain it's positioning even if steps are lost.
+A stepper motor & magnetic encoder drives the dial and can detect when the stepper motor stalls. With this method, any desired number can easily be input into the lock and the lock can be "felt" for it's geometries.
+![L0ckcr4ck3r (3)](https://user-images.githubusercontent.com/72902803/190002222-c9b348fc-8be6-458d-83b7-18b67e0618a7.png)
 ![L0ckcr4ck3r (4)](https://user-images.githubusercontent.com/72902803/189998683-6a05d873-729a-4aa7-8828-fad94feb1225.png)
-[Accurate Positioning](https://photos.app.goo.gl/EqdcLpkwjZUhWpmp6)
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/72902803/190001685-2d0fac5a-8186-4610-8ea3-449809643d41.gif)
 
 
-Whilst a servo with an analogFeedback wire can pull up on the shackle and check whether the lock has been opened or not. 
 
+Meanwhile a servo with an analogFeedback wire can pull up on the shackle and check whether the lock has been opened or not. 
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/72902803/190001057-069cf706-c8b1-4324-ace1-77e981bfb805.gif)
 
 
 
@@ -33,6 +39,7 @@ Whilst a servo with an analogFeedback wire can pull up on the shackle and check 
 Custom PCB powered by a USB C input.
 ![MVIMG_20220823_125722](https://user-images.githubusercontent.com/72902803/189993917-e4d566d9-a710-4d93-b4f6-112b091685c3.jpg)
 ![l0ckcr4ck3r](https://user-images.githubusercontent.com/72902803/189994125-900fee2f-7ecb-45a0-b1cc-69ece87774d7.jpg)
+![Electronics](https://user-images.githubusercontent.com/72902803/190002726-54b034f9-83e8-422e-8b92-fd85a2464a27.png)
 
 KiCAD files are included in the github. 
 
