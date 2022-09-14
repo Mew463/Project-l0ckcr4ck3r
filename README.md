@@ -5,7 +5,7 @@ This robot is a true creation of the idea many years ago brought on by [Samy Kam
 
 ![MVIMG_20220913_114445](https://user-images.githubusercontent.com/72902803/189985666-f4c0db4e-e7cb-4d15-8908-caf322dbd3b7.jpg)
 
-[**Full Video**](https://cad.onshape.com/documents/2b977856993104d0f24f1470/w/e2828f2601c6a316a05788e0/e/a76e54aa91df89bb32ae0012)
+[**Full Video**](https://photos.app.goo.gl/8itZ1WREaLV7t2taA)
 
 # how it works. 
 ## Cracking a lock Algorithm 
@@ -14,8 +14,6 @@ First number: Turn dial Counter Clockwise while incrementally adding more and mo
 Third number: Find the gates between numbers 0 - 10 digits. Perform some math for the gates that correspond to a whole number. Do some more math and math and then check the two numbers that will be spit out. The number with the biggest gate is the third number.
 
 Second number: Guess and check till the lock opens, though it follows a pattern of being (FirstNum modulo 4) + a multiple of 4.
-[Guess n Checkin](https://photos.app.goo.gl/Px5Kga3EWhBw1R177)
-
 
 I found that this [video](https://www.youtube.com/watch?v=27rE5ZvWLU0&ab_channel=HelpfulLockPicker) really helped me when trying to program the algorithm.
 
