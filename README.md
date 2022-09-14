@@ -1,24 +1,34 @@
 # Project-l0ckcr4ck3r
-This robot is a true creation of the idea many years ago brought on by [Samy Kamkar's robot](https://samy.pl/combobreaker/) that "utilized" his algorithm for cracking combination locks. The entire process works on the majority of locks that don't have much resistance on the dial and usually takes ~40 seconds.
-![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
+This robot is a true creation of the idea many years ago brought on by [Samy Kamkar's robot](https://samy.pl/combobreaker/) that "utilized" his algorithm for cracking combination locks. Samy Kamkar never demonstrated his robot actually performing the algorithm, though he implied multiple times that it does do it.
 
+I've always wanted to build a robot that does this while maintaining a cool desk toy vibe! I am quite happy wiht the user-oriented design which is a nice fidgety-toy-thing to play with.  
+
+This robot is able to decode the majority of locks that don't have much wear and tear on it and usually takes ~40 seconds.
+![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
 
 ![MVIMG_20220913_114445](https://user-images.githubusercontent.com/72902803/189985666-f4c0db4e-e7cb-4d15-8908-caf322dbd3b7.jpg)
 
 [**Full Video**](https://photos.app.goo.gl/8itZ1WREaLV7t2taA)
 
+
+*inclue video of robot doing it with 5 locks in a row*
+
 # how it works. 
-## Cracking a lock Algorithm 
-First number: Turn dial Counter Clockwise while incrementally adding more and more force to the shackle until it suddenly stops. Round down to the nearest whole number and add 14. That is the first number in the combo
+## Cracking lock Algorithm 
+First number: Turn dial Counter Clockwise while incrementally adding more and more force to the shackle until it suddenly stops. Round down to the nearest whole number and add 14. That is the first number in the combo. 
 
-Third number: Find the gates between numbers 0 - 10 digits. Perform some math for the gates that correspond to a whole number. Do some more math and math and then check the two numbers that will be spit out. The number with the biggest gate is the third number.
+Third number: 
+1) Find the gates between numbers 0 - 10 digits. 
+2) Take the two gates that correspond to a whole number and see whether each of those numbers %(modulo) 4 = firstNum % 4. 
+3) If the equation is satisfied, store that number somewhere. Now add 10 to each number and perform the same operation as the previous step until you have **two** numbers that satisfy the equation
+4) Now check the gate size of the two numbers which satisfy the equation. The number with the biggest gate is the third number. 
 
-Second number: Guess and check till the lock opens, though it follows a pattern of being (FirstNum modulo 4) + a multiple of 4.
+Second number: Guess and check until the lock opens, though it follows a pattern of being (FirstNum % 4) + a multiple of 4.
 
 I found that this [video](https://www.youtube.com/watch?v=27rE5ZvWLU0&ab_channel=HelpfulLockPicker) really helped me when trying to program the algorithm.
 
 ## This robot 
-A stepper motor & magnetic encoder drives the dial and can detect when the stepper motor stalls. 
+A stepper motor running a TMC2208 Trinamic Driver & magnetic encoder turns the dial and can detect when the stepper motor stalls. 
 ![L0ckcr4ck3r (6)](https://user-images.githubusercontent.com/72902803/190066424-c39b0e46-af7e-4335-b26d-acb7b4b06bff.png)
 
 With this method, any desired number can easily be input into the lock and the lock can be "felt" for it's geometries.
@@ -29,7 +39,7 @@ Meanwhile a servo powers a rack and pinion gear which allows precise control of 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/72902803/190001057-069cf706-c8b1-4324-ace1-77e981bfb805.gif)
 
 
-Since the servo is modified with an [analog Feedback wire](https://www.youtube.com/watch?v=XfZLtkr6dgU&ab_channel=CuriousMotor), we can pull up on the shackle and use this to check whether the lock has been opened or not. 
+Since I modified the servo with an [analog Feedback wire](https://www.youtube.com/watch?v=XfZLtkr6dgU&ab_channel=CuriousMotor), we can pull up on the shackle and use this to check whether the lock has been opened or not. 
 
 ![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/72902803/190021674-d77ea7ec-cc6f-4fd7-95ee-f4dc7078bf53.gif)
 
@@ -51,7 +61,6 @@ KiCAD files are included in the github.
 # Materials
 
 ## Mechanical
-
 * [TMC2208 Stepper Driver](https://www.amazon.com/Printer-TMC2208-Screwdriver-Controller-Ramps1-4/dp/B082LSQWZF/ref=sr_1_3?crid=2DM8J6G3IDA8J&keywords=tmc2208&qid=1661839331&sprefix=tmc2208%2Caps%2C133&sr=8-3)
 * [High torque servos](https://www.amazon.com/Youleke-Torque-Digital-Servo%EF%BC%8CWaterproof-Horn%EF%BC%88270%C2%B0%EF%BC%89/dp/B08739MGPL/ref=sr_1_11?crid=81HZZ5JLGLML&keywords=servo&qid=1661839358&sprefix=servo+%2Caps%2C248&sr=8-11)
 * [Stepper motor](https://www.amazon.com/STEPPERONLINE-Bipolar-Stepper-22-6oz-Extruder/dp/B00PNEQ79Q/ref=sr_1_6?crid=1U1NH4LQTF0ZK&keywords=stepper+motor&qid=1661839383&sprefix=stepper+motor+%2Caps%2C139&sr=8-6)
@@ -59,7 +68,6 @@ KiCAD files are included in the github.
 * Assorted M3 Bolts
 
 ## Electrical
-
 * Arduino Nano
 * 10uF Capacitor x2
 * Diode 
