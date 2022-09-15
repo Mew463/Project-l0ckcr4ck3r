@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name "TMC2208")(type "KiCad")(uri "${KIPRJMOD}/TMC2208_SILENTSTEPSTICK/TMC2208_SILENTSTEPSTICK.kicad_sym")(options "")(descr ""))
+  (lib (name "New_Library")(type "KiCad")(uri "${KIPRJMOD}/New_Library.kicad_sym")(options "")(descr ""))
+  (lib (name "Regulator")(type "KiCad")(uri "${KIPRJMOD}/LD1085V50/LD1085V50.kicad_sym")(options "")(descr ""))
+)

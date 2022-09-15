@@ -1,0 +1,24 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# LD1085V50
+#
+DEF LD1085V50 U 0 40 N N 1 L N
+F0 "U" -150 -170 50 V V L BNN
+F1 "LD1085V50" 210 -190 50 V V L BNN
+F2 "TO220V" 0 0 50 H I L BNN
+F3 "" 0 0 50 H I L BNN
+DRAW
+T 0 -90 -180 40 0 0 0 1 Normal 0 L B
+T 0 -10 -180 40 0 0 0 2 Normal 0 L B
+T 0 60 -180 40 0 0 0 3 Normal 0 L B
+S -100 -200 100 200 0 0 10 f
+X ~ 1 -100 -400 200 U 40 40 0 0 B 
+X ~ 2 0 -400 200 U 40 40 0 0 B 
+X ~ 3 100 -400 200 U 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library

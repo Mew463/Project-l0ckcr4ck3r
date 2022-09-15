@@ -28,7 +28,7 @@ U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(U8X8_PIN_NONE);
 #define offset 788 // Offset value gotten from readAngle()
 #define stepsperRev 1600
 
-#define servoNeutral 1900 // Point when shcakle is fully pushed INTO THE LOCK
+#define servoNeutral 1900 // Point when shackle is fully pushed INTO THE LOCK
 #define servoOpen 1500
 #define servoFeedbackOpen 346
 

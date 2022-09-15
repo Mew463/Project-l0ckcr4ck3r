@@ -172,8 +172,8 @@ bool testOpen() {
   double curPos = ringbufferAvg();
   double lastPos = curPos;
   
-  int posThreshold = 25;
-  int timeThreshold = 35;
+  int posThreshold = 35;
+  int timeThreshold = 45;
   servo.writeMicroseconds(servoOpen);
 
   int nonfirst = 0;

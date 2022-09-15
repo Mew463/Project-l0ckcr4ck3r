@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name "TMC2208_SILENTSTEPSTICK")(type "KiCad")(uri "${KIPRJMOD}/TMC2208_SILENTSTEPSTICK")(options "")(descr ""))
+  (lib (name "LD1085")(type "KiCad")(uri "${KIPRJMOD}/LD1085V50")(options "")(descr ""))
+  (lib (name "Library")(type "KiCad")(uri "${KIPRJMOD}/Library.pretty")(options "")(descr ""))
+)
