@@ -1,12 +1,15 @@
+<img align="right" src="https://user-images.githubusercontent.com/72902803/190844818-697106ac-0b5a-423b-b87c-c39876b1ba75.png">
+
 # Project-l0ckcr4ck3r
 This robot is a true creation of the idea many years ago brought on by [Samy Kamkar's robot](https://samy.pl/combobreaker/) that "utilized" his algorithm for cracking combination locks. Samy Kamkar never demonstrated his robot actually performing the algorithm, though he implied multiple times that it does do it.
-
-![Untitled-1](https://user-images.githubusercontent.com/72902803/190844818-697106ac-0b5a-423b-b87c-c39876b1ba75.png)
 
 I've always wanted to build a robot that actually decodes locks while maintaining a cool desk toy vibe! I am quite happy with the user-oriented design and doubles as a nice fidgety-toy-thing to play with.  
 
 This robot is able to decode the majority of locks that don't have much wear and tear on it and usually takes ~40 seconds.
 
+<br/><br/>
+
+## Photo
 ![MVIMG_20220913_114445](https://user-images.githubusercontent.com/72902803/189985666-f4c0db4e-e7cb-4d15-8908-caf322dbd3b7.jpg)
 
 ## Video
