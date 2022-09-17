@@ -1,24 +1,24 @@
 # Project-l0ckcr4ck3r
 This robot is a true creation of the idea many years ago brought on by [Samy Kamkar's robot](https://samy.pl/combobreaker/) that "utilized" his algorithm for cracking combination locks. Samy Kamkar never demonstrated his robot actually performing the algorithm, though he implied multiple times that it does do it.
 
-I've always wanted to build a robot that does this while maintaining a cool desk toy vibe! I am quite happy wiht the user-oriented design which is a nice fidgety-toy-thing to play with.  
+![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
+
+I've always wanted to build a robot that actually decodes locks while maintaining a cool desk toy vibe! I am quite happy with the user-oriented design and doubles as a nice fidgety-toy-thing to play with.  
 
 This robot is able to decode the majority of locks that don't have much wear and tear on it and usually takes ~40 seconds.
-![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
 
 ![MVIMG_20220913_114445](https://user-images.githubusercontent.com/72902803/189985666-f4c0db4e-e7cb-4d15-8908-caf322dbd3b7.jpg)
 
-[**Full Video**](https://photos.app.goo.gl/8itZ1WREaLV7t2taA)
+## Video
+[![3 Locks in a Row](https://img.youtube.com/vi/nw5f3ZPQd-o/0.jpg)](https://www.youtube.com/watch?v=nw5f3ZPQd-o)
 
-
-*inclue video of robot doing it with 5 locks in a row*
 
 # how it works. 
 ## Cracking lock Algorithm 
 First number: Turn dial Counter Clockwise while incrementally adding more and more force to the shackle until it suddenly stops. Round down to the nearest whole number and add 14. That is the first number in the combo. 
 
 Third number: 
-1) Find the gates between numbers 0 - 10 digits. 
+1) Find the gates between digits 0 - 10 . 
 2) Take the two gates that correspond to a whole number and see whether each of those numbers %(modulo) 4 = firstNum % 4. 
 3) If the equation is satisfied, store that number somewhere. Now add 10 to each number and perform the same operation as the previous step until you have **two** numbers that satisfy the equation
 4) Now check the gate size of the two numbers which satisfy the equation. The number with the biggest gate is the third number. 
@@ -28,7 +28,7 @@ Second number: Guess and check until the lock opens, though it follows a pattern
 I found that this [video](https://www.youtube.com/watch?v=27rE5ZvWLU0&ab_channel=HelpfulLockPicker) really helped me when trying to program the algorithm.
 
 ## This robot 
-A stepper motor running a TMC2208 Trinamic Driver & magnetic encoder turns the dial and can detect when the stepper motor stalls. 
+A TMC2208 Trinamic driver drives a stepper motor & magnetic encoder. These components turn the dial and can detect when the stepper motor stalls. 
 ![L0ckcr4ck3r (6)](https://user-images.githubusercontent.com/72902803/190066424-c39b0e46-af7e-4335-b26d-acb7b4b06bff.png)
 
 With this method, any desired number can easily be input into the lock and the lock can be "felt" for it's geometries.
@@ -50,7 +50,7 @@ Since I modified the servo with an [analog Feedback wire](https://www.youtube.co
 [CAD Files](https://cad.onshape.com/documents/2b977856993104d0f24f1470/w/e2828f2601c6a316a05788e0/e/a76e54aa91df89bb32ae0012)
 
 # Electronics 
-Custom PCB powered by a USB C input.
+Custom PCB powered by a 12V USB C input. An Arduino Nano is the brain and a 5V regulator gives the neccessary voltage for the servo. 
 ![MVIMG_20220823_125722](https://user-images.githubusercontent.com/72902803/189993917-e4d566d9-a710-4d93-b4f6-112b091685c3.jpg)
 ![l0ckcr4ck3r](https://user-images.githubusercontent.com/72902803/189994125-900fee2f-7ecb-45a0-b1cc-69ece87774d7.jpg)
 ![Electronics](https://user-images.githubusercontent.com/72902803/190002726-54b034f9-83e8-422e-8b92-fd85a2464a27.png)
