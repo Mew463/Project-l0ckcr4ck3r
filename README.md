@@ -1,7 +1,7 @@
 # Project-l0ckcr4ck3r
 This robot is a true creation of the idea many years ago brought on by [Samy Kamkar's robot](https://samy.pl/combobreaker/) that "utilized" his algorithm for cracking combination locks. Samy Kamkar never demonstrated his robot actually performing the algorithm, though he implied multiple times that it does do it.
 
-![image](https://user-images.githubusercontent.com/72902803/190003187-c0b193af-47b9-4e9d-af85-569493eea658.png)
+![Untitled-1](https://user-images.githubusercontent.com/72902803/190844818-697106ac-0b5a-423b-b87c-c39876b1ba75.png)
 
 I've always wanted to build a robot that actually decodes locks while maintaining a cool desk toy vibe! I am quite happy with the user-oriented design and doubles as a nice fidgety-toy-thing to play with.  
 
@@ -13,7 +13,7 @@ This robot is able to decode the majority of locks that don't have much wear and
 [![3 Locks in a Row](https://img.youtube.com/vi/nw5f3ZPQd-o/0.jpg)](https://www.youtube.com/watch?v=nw5f3ZPQd-o)
 
 
-# how it works. 
+# How it works. 
 ## Cracking lock Algorithm 
 First number: Turn dial Counter Clockwise while incrementally adding more and more force to the shackle until it suddenly stops. Round down to the nearest whole number and add 14. That is the first number in the combo. 
 
@@ -42,7 +42,6 @@ Meanwhile a servo powers a rack and pinion gear which allows precise control of 
 Since I modified the servo with an [analog Feedback wire](https://www.youtube.com/watch?v=XfZLtkr6dgU&ab_channel=CuriousMotor), we can pull up on the shackle and use this to check whether the lock has been opened or not. 
 
 ![ezgif com-gif-maker (6)](https://user-images.githubusercontent.com/72902803/190021674-d77ea7ec-cc6f-4fd7-95ee-f4dc7078bf53.gif)
-
 
 
 # 3D Model
