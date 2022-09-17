@@ -50,7 +50,7 @@ Since I modified the servo with an [analog Feedback wire](https://www.youtube.co
 [CAD Files](https://cad.onshape.com/documents/2b977856993104d0f24f1470/w/e2828f2601c6a316a05788e0/e/a76e54aa91df89bb32ae0012)
 
 # Electronics 
-Custom PCB powered by a USB C input.
+Custom PCB powered by a 12V USB C input. An Arduino Nano is the brain and a 5V regulator gives the neccessary voltage for the servo. 
 ![MVIMG_20220823_125722](https://user-images.githubusercontent.com/72902803/189993917-e4d566d9-a710-4d93-b4f6-112b091685c3.jpg)
 ![l0ckcr4ck3r](https://user-images.githubusercontent.com/72902803/189994125-900fee2f-7ecb-45a0-b1cc-69ece87774d7.jpg)
 ![Electronics](https://user-images.githubusercontent.com/72902803/190002726-54b034f9-83e8-422e-8b92-fd85a2464a27.png)
