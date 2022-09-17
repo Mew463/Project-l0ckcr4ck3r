@@ -32,5 +32,8 @@ void crackLock() {
   u8x8.print(elapsedTime);
   u8x8.drawString(14,2, "s");
   Serial.println(" ----- Done in " + String(elapsedTime) + " seconds -----");
-  delay(8000);
+  u8x8.drawString(0,4, "<");
+  u8x8.drawString(2,4, "Back");
+  while (!detectPress());
+
 }

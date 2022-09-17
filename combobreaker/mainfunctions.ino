@@ -184,7 +184,6 @@ void findThirdNum() {
 
   Serial.println("Third number: " + String(thirdNum[a]));  
 
-  dial(0, CW);
 }
 
 void calcSecondNums() { // Calculates the possible second numbers and places them in the array

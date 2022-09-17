@@ -85,6 +85,7 @@ void setup()
 
   servo.attach(5);
   servo.writeMicroseconds(servoNeutral);
+  dial(0);
   pinMode(servofeedback, INPUT);
 
   Wire.begin();
