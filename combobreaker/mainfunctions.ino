@@ -1,7 +1,7 @@
 void findFirstNum() { // Spins the dial while slowly pulling up on the shackle, when the motor stalls add ~14 to the current number
   printLine("Finding", 2);
   printLine("First Num", 3);
-  int curServoCom = servoNeutral - 40; // Start probing a little higher than Neutral to save time
+  int curServoCom = servoNeutral - 60; // Start probing a little higher than Neutral to save time
   dial(0, CC, 2); // Clear lock and ensure all the dials are being spun
 
   servo.writeMicroseconds(curServoCom);

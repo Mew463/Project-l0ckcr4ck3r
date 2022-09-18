@@ -13,7 +13,8 @@ void crackLock() {
   printCombo(firstNum, -1, -1, 3);
 
   dial(39, CC); // Make sure all the disc packs dont interfere with finding the third num
-  dial(0,CW); // Reset lock to 0 to prep for probing
+  dial(35, CW, 1); // Reset lock to 35 to prep for probing
+
   findThirdNum();
 
   if (estop)
